@@ -32,8 +32,10 @@
     <li ng-repeat="task in tasks | filter:filterBy" class="list-group-item" ng-hide="task.completed && !showCompleted" ng-class="{ completed: task.completed }">
         <div class="row">
             <div class="col-md-8">
-                <input id="input_{{$index}}" ng-model="task.completed" type="checkbox">
-                <label ng-dblclick="taskCtrl.edit(task)" for="input_{{$index}}" ng-bind-html="task.name|fancy"></label>
+                <label ng-dblclick="taskCtrl.edit(task)" for="input_{{$index}}">
+                    <input id="input_{{$index}}" ng-model="task.completed" type="checkbox">
+                    <span ng-bind-html="task.name|fancy"></span>
+                </label>
             </div>
             <div class="col-md-4">
                 <span class="pull-right btn-group pointer">
