@@ -1,5 +1,5 @@
-noktime
-=======
+noktime-client
+==============
 
 Simple time &amp; tasks managment
 
@@ -8,13 +8,12 @@ Demo: https://noktime.herokuapp.com/
 Installation
 ------------
 
-1. Install node http://nodejs.org/download/
+1. Install node & npm http://nodejs.org/download/
+2. Install bower `npm install -g bower`
 2. Clone noktime from github : `git clone https://github.com/iwazaru/noktime.git`
 3. Change directory `cd noktime`
-4. Install dependencies `npm install`
-5. Start server `node server.js`
-
-You can now simply manage your tasks & time @ http://localhost:5000/
+4. Install bower dependencies `bower install`
+5. Run a webserver pointing to root directory
 
 TODO
 ----
