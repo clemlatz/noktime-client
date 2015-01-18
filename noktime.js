@@ -47,6 +47,16 @@ app.controller('TaskController', function($scope) {
 		}
 	};
 	
+	// Snooze task
+	this.snooze = function(task) {
+		task.snoozed = true;
+		if (task.snoozedTo === null) {
+			delete task.snoozedTo;
+			task.snoozed = false;
+		}
+		task.showSnoozer = false;
+	};
+	
 	// Remove task from list
 	this.remove = function(task) {
 		var index = $scope.tasks.indexOf(task);
@@ -64,7 +74,25 @@ app.controller('TaskController', function($scope) {
 	this.load = function() {
 		if (localStorage.tasks) {
 			log('Tasks loaded from localStorage');
-			return JSON.parse(localStorage.tasks);
+			var tasks = JSON.parse(localStorage.tasks);
+			
+			// Convert date to object
+			$.map(tasks, function(item, index) {
+				if (typeof item.snoozedTo != 'undefined') {
+					item.snoozedTo = new Date(item.snoozedTo);
+					
+					// If snoozedTo date is in the past
+					if (item.snoozedTo <= new Date()) {
+						delete item.snoozedTo;
+						item.snoozed = false;
+					}
+					
+					item.snoozedTo = new Date(item.snoozedTo);
+				} else item.snoozed = false;
+				return item;
+			});
+			
+			return tasks;
 		}
 		
 		return [];
@@ -78,7 +106,9 @@ app.controller('TaskController', function($scope) {
 	}, true);
 	
 	// Options
+	$scope.minDate = new Date();
 	$scope.showCompleted = false;
+	$scope.showSnoozed = false;
 	$scope.filterBy = '';
 	
 });

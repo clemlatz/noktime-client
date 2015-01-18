@@ -80,18 +80,6 @@
 		opacity: 0;
 	}
 	
-	/* LABELS */
-	
-	label, .pointer {
-		cursor: pointer;
-	}
-	
-	.completed label {
-		text-decoration: line-through;
-		color: gray;
-		opacity: 0.5;
-	}
-	
 	/* TAGS */
 	
 	.project-tag {
@@ -110,10 +98,20 @@
 	
 	/* TASKS */
 	
+	label, .pointer {
+		cursor: pointer;
+	}
+	
+	.completed label {
+		text-decoration: line-through;
+		color: gray;
+		opacity: 0.5;
+	}
+	
 	.filtered {
 		opacity: 0.25;
 	}
 
-	.snoozed {
+	.snoozed label {
 		color: lightblue;
 	}

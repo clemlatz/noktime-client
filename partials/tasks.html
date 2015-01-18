@@ -7,7 +7,7 @@
             <input type="checkbox" ng-model="showCompleted"> completed tasks
         </label>
         <label class="btn btn-default">
-            <input type="checkbox"> snoozed tasks
+            <input type="checkbox" ng-model="showSnoozed"> snoozed tasks
         </label>
 </div><br>
 
@@ -29,7 +29,7 @@
 </ul>
 
 <ul class="list-group" ng-model="tasks" ui-sortable>
-    <li ng-repeat="task in tasks | filter:filterBy" class="list-group-item" ng-hide="task.completed && !showCompleted" ng-class="{ completed: task.completed }">
+    <li ng-repeat="task in tasks | filter:filterBy" class="list-group-item" ng-hide="(task.completed && !showCompleted) || (task.snoozed && !showSnoozed)" ng-class="{ completed: task.completed, snoozed: task.snoozed }">
         <div class="row">
             <div class="col-md-8">
                 <label ng-dblclick="taskCtrl.edit(task)" for="input_{{$index}}">
@@ -40,11 +40,13 @@
             <div class="col-md-4">
                 <span class="pull-right btn-group pointer">
                     <button ng-click="taskCtrl.edit(task)" type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> edit</button>
-                    <button type="button" class="btn btn-default btn-xs" disabled><i class="fa fa-clock-o"></i> time</button>
-                    <button type="button" class="btn btn-default btn-xs" disabled><i class="fa fa-history"></i> snooze</button>
+                    <button ng-click="task.showSnoozer = !task.showSnoozer" type="button" class="btn btn-default btn-xs"><i class="fa fa-history"></i> snooze</button>
                     <button ng-click="taskCtrl.remove(task)" type="button" class="btn btn-default btn-xs"><i class="fa fa-trash-o"></i> delete</button>
                 </span>
             </div>
+        </div>
+        <div ng-show="task.showSnoozer" class="text-center">
+            Snooze to: <input type="date" min="{{ minDate }}" ng-model="task.snoozedTo" ng-change="taskCtrl.snooze(task)">
         </div>
     </li>
     	
